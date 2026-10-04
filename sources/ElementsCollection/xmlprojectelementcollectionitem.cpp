@@ -16,6 +16,7 @@
 	along with QElectroTech.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "xmlprojectelementcollectionitem.h"
+#include "elementclassification.h"
 
 #include "../qeticons.h"
 #include "../qetproject.h"
@@ -223,12 +224,7 @@ void XmlProjectElementCollectionItem::setUpData()
 			//in the data Qt::UserRole+1, these data will be use for search.
 		ElementsLocation location(embeddedPath(), m_project);
 		DiagramContext context = location.elementInformations();
-		QStringList search_list;
-		for (QString key : context.keys()) {
-			search_list.append(context.value(key).toString());
-		}
-		search_list.append(localName());
-		setData(search_list.join(" "));
+		setData(ElementClassification::searchText(context, localName()));
 	}
 
 	setToolTip(collectionPath());

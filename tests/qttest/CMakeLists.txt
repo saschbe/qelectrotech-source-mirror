@@ -688,6 +688,18 @@ add_test(NAME tst_diagramcontext COMMAND tst_diagramcontext)
 target_include_directories(tst_diagramcontext PRIVATE ${QET_DIR}/sources)
 target_link_libraries(tst_diagramcontext PRIVATE Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
 
+# Optional .elmt classification: XML readers and the collection search role.
+add_executable(
+  tst_elementclassification
+  tst_elementclassification.cpp
+  ${QET_DIR}/sources/diagramcontext.cpp
+  ${QET_DIR}/sources/qet.cpp
+  ${QET_DIR}/sources/qeticons.cpp
+  ${QET_DIR}/sources/shortcutmanager.cpp)
+add_test(NAME tst_elementclassification COMMAND tst_elementclassification)
+target_include_directories(tst_elementclassification PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_elementclassification PRIVATE Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
+
 # XRefProperties: an empty or unknown cross-reference position, as older
 # versions saved it, reads as the default instead of drawing the
 # cross-reference over the element's label (issue #1238).

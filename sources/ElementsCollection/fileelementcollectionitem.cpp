@@ -17,6 +17,7 @@
 */
 
 #include "fileelementcollectionitem.h"
+#include "elementclassification.h"
 
 #include "../qetapp.h"
 #include "../qeticons.h"
@@ -383,11 +384,7 @@ void FileElementCollectionItem::setUpData()
 			// Parse standard element information for search
 			ElementsLocation loc(collectionPath());
 			DiagramContext context = loc.elementInformations();
-			QStringList search_list;
-			for (QString& key : context.keys())
-			{ search_list.append(context.value(key).toString()); }
-			search_list.append(localName(loc));
-			setData(search_list.join(" "));
+			setData(ElementClassification::searchText(context, localName(loc)));
 
 			// Tooltip: show what a truncated tree label can't - the full
 			// localized name and the descriptive element information.

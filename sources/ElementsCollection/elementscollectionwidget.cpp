@@ -27,6 +27,7 @@
 #include "../qetmessagebox.h"
 #include "../qetproject.h"
 #include "elementcollectionitem.h"
+#include "elementclassification.h"
 #include "elementpreviewdelegate.h"
 #include "elementscollectionmodel.h"
 #include "elementslocation.h"
@@ -1113,8 +1114,8 @@ void ElementsCollectionWidget::search()
 		return;
 	}
 
-		//start the search when text have at least 3 letters.
-	if (text.size() < 3) {
+		//Two-character country codes are searchable too.
+	if (text.size() < ElementClassification::minimumQueryLength) {
 		return;
 	}
 
@@ -1161,7 +1162,7 @@ QVector<ElementSearchHit> ElementsCollectionWidget::rankedSearch(
 		const QModelIndex &within)
 {
 	QVector<ElementSearchHit> hits;
-	if (!m_model || text.size() < 3) {
+	if (!m_model || text.size() < ElementClassification::minimumQueryLength) {
 		return hits;
 	}
 
