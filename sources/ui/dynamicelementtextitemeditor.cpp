@@ -38,6 +38,9 @@ DynamicElementTextItemEditor::DynamicElementTextItemEditor(Element *element, QWi
 	ui->setupUi(this);
 	
 	ui->m_tree_view->setItemDelegate(new DynamicTextItemDelegate(ui->m_tree_view));
+	// Keep keyboard navigation inside the property table when an editor
+	// commits with Tab / Shift+Tab.
+	ui->m_tree_view->setTabKeyNavigation(true);
 	ui->m_remove_selection->setDisabled(true);
 	
 	setElement(element);
