@@ -522,8 +522,8 @@ void BorderTitleBlock::draw(QPainter *painter)
 
 	painter -> setFont(QETApp::diagramTextsFont());
 
-	//Draw the empty case at the top left of diagram when there is header
-	if (display_border_ && (display_columns_ || display_rows_))
+	//Draw the empty corner cell only when both row and column headers are shown
+	if (display_border_ && (display_columns_ && display_rows_))
 	{
 		QRectF first_rectangle(
 			diagram_rect_.topLeft().x(),
@@ -617,10 +617,10 @@ void BorderTitleBlock::drawDxf(
 	rows_header_width_     *= Createdxf::xScale;
 	columns_width_         *= Createdxf::xScale;
 
-	// draw the empty box that appears as soon as there is a header
-	// dessine la case vide qui apparait des qu'il y a un entete
+	// draw the empty corner cell only when both headers are shown
+	// dessine la case vide uniquement si les deux entetes sont visibles
 	if (display_border_ &&
-		(display_columns_ ||
+		(display_columns_ &&
 		 display_rows_)
 		) {
 		Createdxf::drawRectangle(
