@@ -34,6 +34,7 @@
 #include <QColorDialog>
 #include <QComboBox>
 #include <QHash>
+#include <QKeyEvent>
 #include <QModelIndex>
 #include <QStandardItem>
 #include <QTimer>
@@ -1922,7 +1923,16 @@ void DynamicTextItemDelegate::setModelData(
 
 bool DynamicTextItemDelegate::eventFilter(QObject *object, QEvent *event)
 {
-	
+	// Tab and Shift+Tab must reach Qt's delegate handling: it commits the
+	// edited value and asks the item view to open the next/previous editor.
+	// The live-update spinbox workaround below otherwise consumes both keys.
+	if (event->type() == QEvent::KeyPress)
+	{
+		const auto *key_event = static_cast<QKeyEvent *>(event);
+		if (key_event->key() == Qt::Key_Tab || key_event->key() == Qt::Key_Backtab)
+			return QStyledItemDelegate::eventFilter(object, event);
+	}
+
 	//This is a bad hack, for change the normal behavior :
 	//in normal behavior,
 	//the value is committed when the spinbox lose focus or enter key is pressed
